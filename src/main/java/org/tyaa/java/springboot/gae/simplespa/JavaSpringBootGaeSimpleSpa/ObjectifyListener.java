@@ -3,6 +3,7 @@ package org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa;
 import com.google.cloud.datastore.DatastoreOptions;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
+import org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.model.CategoryModel;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -18,6 +19,10 @@ public class ObjectifyListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        // при запуске веб-приложения подключиться к реальному или локальному эмулированному
+        // хранилищу Google DataStore -
+        // в зависимости от наличия или отсутствия ключа SPRING_PROFILES_ACTIVE
+        // в файле src/main/webapp/WEB-INF/appengine-web.xml
         try {
             if (System.getenv("SPRING_PROFILES_ACTIVE") == null) {
                 // local
@@ -38,8 +43,9 @@ public class ObjectifyListener implements ServletContextListener {
         } catch (Exception ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
-        // ObjectifyService.register(Article.class);
-        // ObjectifyService.register(Author.class);
+        // регистрируем все классы моделей, экземпляры которых
+        // затем будем читать или записывать в хранилище
+        ObjectifyService.register(CategoryModel.class);
     }
 
     @Override
