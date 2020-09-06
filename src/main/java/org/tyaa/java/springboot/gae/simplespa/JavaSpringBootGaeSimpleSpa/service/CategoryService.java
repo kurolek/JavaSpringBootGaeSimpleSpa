@@ -2,7 +2,7 @@ package org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.servic
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.dao.CategoryDao;
+import org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.dao.CategoryObjectifyDao;
 import org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.model.CategoryModel;
 import org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.model.ResponseModel;
 import org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.service.interfaces.ICategoryService;
@@ -11,11 +11,11 @@ import org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.service
 public class CategoryService implements ICategoryService {
 
     @Autowired
-    private CategoryDao categoryDao;
+    private CategoryObjectifyDao categoryObjectifyDao;
 
     @Override
     public ResponseModel create(CategoryModel categoryModel) {
-        categoryDao.create(categoryModel);
+        categoryObjectifyDao.create(categoryModel);
         return ResponseModel.builder()
                 .status(ResponseModel.SUCCESS_STATUS)
                 .message(String.format("Category %s Created", categoryModel.getName()))
@@ -24,7 +24,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public ResponseModel update(CategoryModel categoryModel) {
-        categoryDao.update(categoryModel);
+        categoryObjectifyDao.update(categoryModel);
         return ResponseModel.builder()
                 .status(ResponseModel.SUCCESS_STATUS)
                 .message(String.format("Category %s Updated", categoryModel.getName()))
@@ -35,15 +35,15 @@ public class CategoryService implements ICategoryService {
     public ResponseModel getAll() {
         return ResponseModel.builder()
                 .status(ResponseModel.SUCCESS_STATUS)
-                .data(categoryDao.read())
+                .data(categoryObjectifyDao.read())
                 .build();
     }
 
     @Override
     public ResponseModel delete(Long id) throws IllegalAccessException, InstantiationException {
-        CategoryModel categoryModel = categoryDao.read(id);
+        CategoryModel categoryModel = categoryObjectifyDao.read(id);
         if (categoryModel != null){
-            categoryDao.delete(categoryModel.getId());
+            categoryObjectifyDao.delete(categoryModel.getId());
             return ResponseModel.builder()
                     .status(ResponseModel.SUCCESS_STATUS)
                     .message(String.format("Category #%s Deleted", categoryModel.getName()))

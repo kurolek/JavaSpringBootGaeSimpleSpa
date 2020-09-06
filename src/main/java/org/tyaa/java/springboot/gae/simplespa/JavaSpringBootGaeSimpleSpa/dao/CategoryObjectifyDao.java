@@ -8,7 +8,7 @@ import org.tyaa.java.springboot.gae.simplespa.JavaSpringBootGaeSimpleSpa.model.C
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 @Repository
-public class CategoryDao extends AbstractDAO<CategoryModel> {
+public class CategoryObjectifyDao extends AbstractDAO<CategoryModel> {
     // получение из хранилища объекта типа CategoryModel по имени категории
     public CategoryModel read(String _name) throws Exception {
         return (CategoryModel) ObjectifyService.run(
