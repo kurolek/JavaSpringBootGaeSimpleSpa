@@ -18,4 +18,14 @@ public class CategoryDao extends AbstractDAO<CategoryModel> {
                 .now() // выполнить получение одного найденного объекта немедленно
         );
     }
+    public CategoryModel findById(Long id) throws Exception{
+        return (CategoryModel) ObjectifyService.run(
+                (Work) () -> ofy().load().type(CategoryModel.class)
+                        .filter("id", id)
+                        .first()
+                        .now()
+        );
+
+
+    }
 }
